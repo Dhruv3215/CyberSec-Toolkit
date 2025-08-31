@@ -67,15 +67,15 @@ git clone https://github.com/Dhruv3215/CyberSec-Toolkit.git
 ```
 pip install -r requirements.txt
 ```
-4. Run the application by running:-
+3. Run the application by running:-
  ```
  python app.py
  ```
-8. Access the web-based interface by navigating to in your web browser. :-
+4. Access the web-based interface by navigating to in your web browser. :-
  ```
    http://localhost:5000
  ``` 
-11. Use the command-line interface by running :-
+5. Use the command-line interface by running :-
 ```
 python app.py --cli
 ```
@@ -92,3 +92,4 @@ It is not intended for illegal or malicious use.
 
 
 The project is still under development 🛠️ — features and stability may change over time.
+
