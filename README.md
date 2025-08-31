@@ -63,11 +63,22 @@ To run the CyberSec Toolkit, follow these steps:
 ``` 
 git clone https://github.com/Dhruv3215/CyberSec-Toolkit.git 
 ```
-2. Install the required dependencies by running 
-```pip install -r requirements.txt```
-3. Run the application by running ```python app.py```
-4. Access the web-based interface by navigating to ```http://localhost:5000``` in your web browser.
-5. Use the command-line interface by running ```python app.py --cli```.
+2. Install the required dependencies by running :-
+```
+pip install -r requirements.txt
+```
+4. Run the application by running:-
+ ```
+ python app.py
+ ```
+8. Access the web-based interface by navigating to in your web browser. :-
+ ```
+   http://localhost:5000
+ ``` 
+11. Use the command-line interface by running :-
+```
+python app.py --cli
+```
 
 ------------
 
@@ -78,5 +89,6 @@ The CyberSec Toolkit is authored by Dhruv Patel.
 
 This project is created for educational purposes only.
 It is not intended for illegal or malicious use.
+
 
 The project is still under development 🛠️ — features and stability may change over time.
