@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CyberSec Toolkit</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+      <div class="orb"></div>
+        <div>
+          <div class="title">CyberSec Toolkit</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="tabbtn active" data-tab="analyze">Analyze</button>
+        <button class="tabbtn" data-tab="generate">Generate</button>
+        <button class="tabbtn" data-tab="hash">Hash Cracker</button>
+        <button class="tabbtn" data-tab="history">History</button>
+      </nav>
+    </header>
+
+
+    <main class="main">
+      <!-- ===== ANALYZE ===== -->
+      <section id="analyze" class="panel active">
+        <div class="left">
+          <h2>Password Analysis</h2>
+          <label class="small">Password</label>
+          <div class="pw-row">
+            <input id="pw_input" type="password" placeholder="Enter password" autocomplete="off" />
+            <button id="toggle_eye" class="eye-btn" title="Show/Hide">👁️</button>
+          </div>
+
+          <div class="grid">
+            <div>
+              <label class="small">Hash algorithm (for time-to-crack estimate)</label>
+              <select id="an_hash">
+                <option value="sha256">SHA-256</option>
+                <option value="sha1">SHA-1</option>
+                <option value="md5">MD5</option>
+                <option value="sha512">SHA-512</option>
+                <option value="bcrypt">bcrypt</option>
+              </select>
+            </div>
+            <div>
+              <label class="small">Hardware profile</label>
+              <select id="an_hw">
+                <option value="gpu-consumer">GPU (consumer)</option>
+                <option value="gpu-enthusiast">GPU (enthusiast)</option>
+                <option value="cpu">CPU</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="analyze_btn" class="primary">Analyze</button>
+            <button id="copy_btn" class="ghost">Copy</button>
+            <button id="report_btn" class="neon-btn" title="Download PDF report" style="display:none;">Download Analyzer Report</button>
+          </div>
+
+          <div class="card">
+            <div class="label">Strength</div>
+            <div class="strength"><div id="strength_fill" class="fill"></div></div>
+            <div class="meta">
+              <div>Score: <span id="score">-</span>/10</div>
+              <div>Entropy: <span id="entropy">-</span></div>
+              <div>Category: <span id="category">-</span></div>
+              <div>zxcvbn: <span id="zx_score">-</span>/4</div>
+            </div>
+
+	    <div class="checklist">
+	      <div class="check-item" id="ck_upper">
+	        <span class="icon">✖</span> Contains uppercase
+	      </div>
+	      <div class="check-item" id="ck_lower">
+	        <span class="icon">✖</span> Contains lowercase
+	      </div>
+	      <div class="check-item" id="ck_digit">
+	        <span class="icon">✖</span> Contains number
+	      </div>
+	      <div class="check-item" id="ck_special">
+	        <span class="icon">✖</span> Contains special character
+	      </div>
+	      <div class="check-item" id="ck_len8">
+	        <span class="icon">✖</span> At least 8 characters
+	      </div>
+	      <div class="check-item" id="ck_len12">
+	        <span class="icon">✖</span> At least 12 characters
+	      </div>
+	    </div>
+           
+
+            <div class="meta">
+              <div>Estimated time-to-crack: <span id="ttc">—</span></div>
+            </div>
+
+            <div id="reco" class="recommend">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== GENERATE ===== -->
+      <section id="generate" class="panel">
+        <div class="left">
+          <h2>Password / Wordlist Generation</h2>
+          <div class="grid">
+            <div><label class="small">Your name</label><input id="g_name" placeholder="Your name" /></div>
+            <div><label class="small">Pet</label><input id="g_pet" placeholder="Pet name" /></div>
+            <div><label class="small">Hobbies</label><input id="g_hobby" placeholder="Hobbies (comma separated)" /></div>
+            <div><label class="small">Crush</label><input id="g_crush" placeholder="Crush name" /></div>
+            <div><label class="small">DOB</label><input id="g_dob" placeholder="YYYY or YYYY-MM-DD" /></div>
+            <div><label class="small">Random word</label><input id="g_random" placeholder="Random word" /></div>
+          </div>
+
+          <div class="grid">
+            <div>
+              <label class="small">Method</label>
+              <select id="method_pass">
+                <option value="all">All</option><option value="combine">Combine</option>
+                <option value="reverse">Reverse</option><option value="mixed">Mixed</option>
+                <option value="leet">Leet</option><option value="rotate">Rotate</option>
+              </select>
+            </div>
+            <div>
+              <label class="small">Method (wordlist)</label>
+              <select id="method_list">
+                <option value="all">All</option><option value="combine">Combine</option>
+                <option value="reverse">Reverse</option><option value="mixed">Mixed</option>
+                <option value="leet">Leet</option><option value="rotate">Rotate</option>
+              </select>
+            </div>
+            <div><label class="small">Policy</label>
+              <select id="policy">
+                <option value="default">Strong (default)</option>
+                <option value="nist">NIST SP 800-63B</option>
+                <option value="pci">PCI DSS v4.0</option>
+                <option value="company">Company Policy</option>
+              </select>
+            </div>
+            <div><label class="small">Min length</label><input id="g_min" type="number" value="12" min="7" max="64" /></div>
+            <div><label class="small">Max length</label><input id="g_max" type="number" value="16" min="7" max="128" /></div>
+            <div><label class="small">How many passwords?</label><input id="g_count" type="number" value="1" min="1" max="100" /></div>
+            <div><label class="small">Limit (wordlist)</label><input id="g_limit" type="number" value="1000" min="1" /></div>
+          </div>
+
+          <div class="controls">
+            <button id="gen_pass" class="primary">Generate Password(s)</button>
+            <button id="gen_list" class="primary">Generate Wordlist</button>
+            <div><button id="download_list" class="neon-btn" style="display:none;">Download Wordlist</button></div>
+          </div>
+
+          <div id="gen_pwd_status" class="status" style="margin-top:8px;"></div>
+          <!-- Progress bar for wordlist generation -->
+          <div class="progressbar" id="gen_progress_wrap" style="display:none;">
+            <div id="gen_progress" class="progressfill"></div>
+          </div>
+          <pre id="gen_pwd_preview" class="preview"></pre>
+        </div>
+      </section>
+
+      <!-- ===== HASH ===== -->
+      <section id="hash" class="panel">
+        <div class="left">
+          <h2>Hash Cracker</h2>
+          <div class="grid">
+            <div>
+              <label class="small">Algorithm</label>
+              <select id="hash_algo">
+                <option value="md5">MD5</option>
+                <option value="sha1">SHA-1</option>
+                <option value="sha256">SHA-256</option>
+                <option value="sha512">SHA-512</option>
+                <option value="bcrypt">bcrypt</option>
+              </select>
+            </div>
+            <div>
+              <label class="small">Hash</label>
+              <div class="pw-row">
+                <input id="hash_value" type="password" placeholder="Paste hash" />
+                <button id="toggle_hash_eye" class="eye-btn" title="Show/Hide">👁️</button>
+              </div>
+            </div>
+            <div><label class="small">Salt (optional)</label><input id="salt_value" placeholder="Salt value" /></div>
+            <div>
+              <label class="small">Salt position</label>
+              <select id="salt_pos">
+                <option value="suffix">Suffix (word+salt)</option>
+                <option value="prefix">Prefix (salt+word)</option>
+              </select>
+            </div>
+          </div>
+
+          <textarea id="wordlist_paste" placeholder="Optional: paste custom list (one per line)"></textarea>
+
+          <div class="uploader" id="drop_zone">
+            <div>Drag & drop wordlist here or <label class="linklike"><input type="file" id="file_input" hidden />browse</label></div>
+            <div id="upload_status" class="small"></div>
+          </div>
+
+          <div class="controls">
+            <button id="crack_stream_btn" class="primary">Start Cracking (Live)</button>
+          </div>
+
+          <div class="progressbar"><div id="crack_progress" class="progressfill"></div></div>
+          <div id="crack_result" class="preview"></div>
+        </div>
+      </section>
+
+      <!-- ===== HISTORY ===== -->
+      <section id="history" class="panel">
+        <div class="left"><h2>History</h2><div id="history_list" class="history"></div></div>
+        <div class="controls">
+          <button class="ghost" id="clear_history_btn">Clear History</button>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div id="footer_notes" class="notes"></div>
+      <div class="footer-bottom">
+        <div>© CyberSec Toolkit</div>
+        <div class="small">Use only with authorization</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const API_KEY = localStorage.getItem('API_KEY') || '';
+  </script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
