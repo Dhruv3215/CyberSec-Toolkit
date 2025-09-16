@@ -80,12 +80,6 @@ pip install -r requirements.txt
 python app.py --cli
 ```
 
-🚀 Live Demo
------------------
-   app will be accessible at: 
-      👉🏻👉🏻👉🏻
-      [`https://cybersec-toolkit.onrender.com`](https://cybersec-toolkit.onrender.com)
-      👈🏻👈🏻👈🏻
  
 
 
@@ -101,5 +95,6 @@ It is not intended for illegal or malicious use.
 
 
 The project is still under development 🛠️ — features and stability may change over time.
+
 
 
